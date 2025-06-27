@@ -87,6 +87,39 @@
         _fpsHandler((int)round(fps));
     }
     
+    [fpsLabel.superview bringSubviewToFront:fpsLabel];
+}
+
+
+- (UIWindow *)keyWindow {
+    if (@available(iOS 13.0, *)) {
+        NSSet<UIScene *> *connectedScenes = [UIApplication sharedApplication].connectedScenes;
+        for (UIScene *scene in connectedScenes) {
+            if (scene.activationState == UISceneActivationStateForegroundActive &&
+                [scene isKindOfClass:[UIWindowScene class]]) {
+
+                UIWindowScene *windowScene = (UIWindowScene *)scene;
+                for (UIWindow *window in windowScene.windows) {
+                    if (window.isKeyWindow) {
+                        return window;
+                    }
+                }
+
+                // 退而求其次，拿第一个 window
+                if (windowScene.windows.count > 0) {
+                    return windowScene.windows.firstObject;
+                }
+            }
+        }
+    }
+
+    // iOS 13 以下或 fallback
+    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate respondsToSelector:@selector(window)]) {
+        return appDelegate.window;
+    }
+
+    return nil;
 }
 
 - (void)open {
@@ -99,7 +132,11 @@
     }
 
     [displayLink setPaused:NO];
-    [[((NSObject <UIApplicationDelegate> *)([UIApplication sharedApplication].delegate)) window].rootViewController.view addSubview:fpsLabel];
+    UIWindow *keyWindow = [self keyWindow];
+    [keyWindow addSubview:fpsLabel];
+    [keyWindow bringSubviewToFront:fpsLabel];
+
+    // [[((NSObject <UIApplicationDelegate> *)([UIApplication sharedApplication].delegate)) window].rootViewController.view addSubview:fpsLabel];
 }
 
 - (void)openWithHandler:(void (^)(NSInteger fpsValue))handler{
