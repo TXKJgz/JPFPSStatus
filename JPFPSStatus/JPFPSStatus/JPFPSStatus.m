@@ -53,7 +53,7 @@
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         
         // fpsLabel
-        fpsLabel = [[UILabel alloc] initWithFrame:CGRectMake(([[UIScreen mainScreen] bounds].size.width-50)/2+50, 0, 50, 20)];
+        fpsLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 40, 50, 20)];
         BOOL isiPhoneX = (([[UIScreen mainScreen] bounds].size.width == 375.f && [[UIScreen mainScreen] bounds].size.height == 812.f) || ([[UIScreen mainScreen] bounds].size.height == 375.f && [[UIScreen mainScreen] bounds].size.width == 812.f));
         if (isiPhoneX) {
             fpsLabel.frame = CGRectMake(([[UIScreen mainScreen] bounds].size.width-50)/2+50, 24, 50, 20);
