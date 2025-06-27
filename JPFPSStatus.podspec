@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "JPFPSStatus"
-  s.version      = "0.1.1"
+  s.version      = "0.1.2"
   s.summary      = "JPFPSStatus - Show FPS Status on StatusBar"
   s.homepage     = "https://github.com/joggerplus/JPFPSStatus"
   s.license      = "MIT"
